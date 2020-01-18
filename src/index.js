@@ -10,12 +10,12 @@ const app = express();
 
 const PORT = 8080;
 
-console.log(process.env.DB_PASSWORD)
+const { DB_PASSWORD, DB_URL, DB_USERNAME } = process.env
 
 mongoose.Promise = global.Promise;
 mongoose
     .connect(
-        `mongodb://cokedmann:${process.env.DB_PASSWORD}@ds013004.mlab.com:13004/graphql-blog`,
+        `mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_URL}/graphql-blog`,
         {
             useNewUrlParser: true
         }
@@ -25,7 +25,7 @@ mongoose
         (error) => console.log('Mongo Error: ', error)
     );
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
     res.json({
         message: 'Hello GraphQL'
     })
